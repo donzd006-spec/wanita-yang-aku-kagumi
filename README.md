@@ -1,1 +1,0 @@
-# wanita-yang-aku-kagumi.
