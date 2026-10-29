@@ -1,0 +1,169 @@
+/* ===== Warna & font: ubah di sini untuk mengganti tampilan seluruh halaman ===== */
+:root {
+  --ink: #3b2340;
+  --muted: #6e5473;
+  --line: #3b2340;
+  --accent: #c2255c;
+
+  --pink: #ffd6e0;
+  --lavender: #e4d9ff;
+  --mint: #cdf2e0;
+  --butter: #fff0b8;
+  --peach: #ffdcc2;
+  --sky: #d3ecff;
+
+  --bg1: #ffe3ee;
+  --bg2: #e9ddff;
+  --bg3: #d6f1ff;
+
+  --heading: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #fbeaf2;
+    --muted: #e0c8d8;
+    --line: #f3c9dc;
+    --accent: #ff8fb3;
+    --pink: #5a2a40;
+    --lavender: #3f3366;
+    --mint: #1f4a3c;
+    --butter: #5a4a1e;
+    --peach: #5a3524;
+    --sky: #1f4260;
+    --bg1: #2a1630;
+    --bg2: #1d1838;
+    --bg3: #152a3a;
+  }
+}
+
+* { box-sizing: border-box; }
+html { min-height: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  /* latar imut: gradasi pastel + pola bintik */
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .55) 1.5px, transparent 2px) 0 0 / 26px 26px,
+    linear-gradient(135deg, var(--bg1), var(--bg2) 50%, var(--bg3));
+  background-attachment: fixed;
+}
+h1, h2 { font-family: var(--heading); font-weight: 600; line-height: 1.15; margin: 0; }
+p { margin: 0; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* ===== Hiasan latar: emoji melayang ===== */
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg span { position: absolute; bottom: -3rem; font-size: 1.8rem; opacity: .55; animation: naik 14s linear infinite; }
+.bg span:nth-child(1) { left: 6%;  animation-delay: 0s;  }
+.bg span:nth-child(2) { left: 18%; animation-delay: 4s;  font-size: 1.3rem; }
+.bg span:nth-child(3) { left: 32%; animation-delay: 8s;  }
+.bg span:nth-child(4) { left: 47%; animation-delay: 2s;  font-size: 1.4rem; }
+.bg span:nth-child(5) { left: 61%; animation-delay: 6s;  }
+.bg span:nth-child(6) { left: 74%; animation-delay: 10s; font-size: 1.3rem; }
+.bg span:nth-child(7) { left: 86%; animation-delay: 3s;  }
+.bg span:nth-child(8) { left: 94%; animation-delay: 7s;  font-size: 1.4rem; }
+@keyframes naik {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(-110vh) rotate(25deg); }
+}
+
+/* ===== CSS Grid utama: header, sidebar, content-1/2/3, footer ===== */
+.layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(230px, .85fr) 1fr 1fr;
+  gap: 1.2rem;
+  grid-template-areas:
+    "header  header   header"
+    "sidebar content1 content1"
+    "sidebar content2 content3"
+    "footer  footer   footer";
+}
+
+/* ===== Gaya dasar semua blok ===== */
+.card {
+  position: relative;
+  padding: 1.6rem;
+  border: 2.5px solid var(--line);
+  border-radius: 1.75rem;
+  box-shadow: 5px 5px 0 var(--line);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover { transform: translate(-3px, -3px) rotate(-.5deg); box-shadow: 8px 8px 0 var(--line); }
+.card h2 { font-size: clamp(1.4rem, 2.6vw, 1.8rem); margin-bottom: .7rem; }
+.card p + p { margin-top: .8rem; }
+.sticker { position: absolute; top: .7rem; right: 1rem; font-size: 1.7rem; }
+
+/* ===== Penempatan & warna tiap blok ===== */
+.header   { grid-area: header;   background: var(--pink);     text-align: center; padding-block: 2rem; }
+.sidebar  { grid-area: sidebar;  background: var(--lavender); }
+.content1 { grid-area: content1; background: var(--butter); }
+.content2 { grid-area: content2; background: var(--sky); }
+.content3 { grid-area: content3; background: var(--mint); }
+.footer   { grid-area: footer;   background: var(--peach);    text-align: center; }
+
+/* ===== Isi khusus ===== */
+.header h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); }
+.header h1 em { font-style: normal; color: var(--accent); }
+.header .sub { margin-top: .5rem; font-size: 1.25rem; font-weight: 700; color: var(--muted); }
+
+.content1 { display: grid; grid-template-columns: 190px 1fr; gap: 1.6rem; align-items: center; }
+.content1 h2 { font-size: clamp(2rem, 4.5vw, 2.9rem); color: var(--accent); }
+
+/* ===== Foto bergaya polaroid ===== */
+.polaroid {
+  margin: 0;
+  padding: .6rem .6rem .5rem;
+  background: #fff;
+  color: #3b2340;
+  border: 2.5px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 var(--line);
+  transform: rotate(-4deg);
+  transition: transform .25s ease;
+}
+.polaroid:hover { transform: rotate(0deg) scale(1.04); }
+.polaroid .frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--pink);
+  border-radius: .5rem;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.polaroid .placeholder { font-family: var(--heading); font-size: 4rem; color: #c2255c; }
+.polaroid img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.polaroid figcaption { margin-top: .5rem; text-align: center; font-family: var(--heading); font-size: 1.05rem; }
+
+.memories { list-style: none; margin: .9rem 0; padding: 0; display: grid; gap: .8rem; }
+.memories li { padding-left: 2rem; position: relative; }
+.memories li::before { content: "🌸"; position: absolute; left: 0; top: 0; }
+
+.footer p { max-width: 60ch; margin-inline: auto; }
+.footer .thanks { font-family: var(--heading); font-size: 1.5rem; margin-bottom: .6rem; }
+
+/* ===== HP & tablet: 1 kolom ===== */
+@media (max-width: 780px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "content1" "sidebar" "content2" "content3" "footer";
+  }
+  .content1 { grid-template-columns: 1fr; }
+  .polaroid { width: min(230px, 70%); justify-self: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg { display: none; }
+  .card, .polaroid { transition: none; }
+  .card:hover, .polaroid:hover { transform: none; }
+}
